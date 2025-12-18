@@ -374,7 +374,12 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                     <select
                       className="select"
                       value={ln.itemId}
-                      onChange={(e) => onUpdate(ln.id, { itemId: e.target.value })}
+                      onChange={(e) =>
+                        onUpdate(ln.id, {
+                          itemId: e.target.value,
+                          overrideCostPerSqFt: "", // clear override so base reflects the selected item
+                        })
+                      }
                     >
                       {EstimateTool.CATALOG.categories.map((cat) => (
                         <optgroup key={cat.id} label={cat.name}>
