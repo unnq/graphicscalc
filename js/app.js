@@ -315,7 +315,6 @@ function App() {
               <>
                 <CollapsibleSection
                   title="Print Line Items"
-                  subtitle="Dimensions → sqft → cost basis → Sell $/sqft → customer price. Shows derived markup + margin."
                   collapsed={collapsed.print}
                   setCollapsed={(v) => setCollapsed((p) => ({ ...p, print: v }))}
                   right={<button className="btn primary" onClick={(e) => { e.stopPropagation(); addPrintLine(); }}>Add Line</button>}
@@ -331,7 +330,6 @@ function App() {
 
                 <CollapsibleSection
                   title="Labor"
-                  subtitle="Track pay vs bill rates per laborer + labor $/sqft using Install Sq Ft."
                   collapsed={collapsed.labor}
                   setCollapsed={(v) => setCollapsed((p) => ({ ...p, labor: v }))}
                   right={<button className="btn primary" onClick={(e) => { e.stopPropagation(); addHourlyLine(setLaborLines, "lb"); }}>Add Laborer</button>}
@@ -353,7 +351,6 @@ function App() {
 
                 <CollapsibleSection
                   title="Design Fee"
-                  subtitle="Same structure as labor: pay vs bill rates per designer."
                   collapsed={collapsed.design}
                   setCollapsed={(v) => setCollapsed((p) => ({ ...p, design: v }))}
                   right={<button className="btn primary" onClick={(e) => { e.stopPropagation(); addHourlyLine(setDesignLines, "ds"); }}>Add Designer</button>}
@@ -385,9 +382,7 @@ function App() {
 
             <div className="hr"></div>
 
-            <div className="note">
-              Costs come from <span className="badge">js/estimateTool.js</span> (CATALOG). Print pricing is driven by <span className="badge">Sell $/sqft</span> per line.
-            </div>
+            
           </div>
         </div>
       </div>
@@ -631,9 +626,7 @@ function SectionHourly({
         </table>
       </div>
 
-      <div className="note" style={{ marginTop: 10 }}>
-        Tip: Use this for {kindLabel.toLowerCase()} time that you want tracked separately from install labor (e.g., proofs, revisions, art prep).
-      </div>
+      
     </div>
   );
 }
