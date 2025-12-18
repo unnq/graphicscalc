@@ -1,46 +1,71 @@
 // js/estimateTool.js
 // Cost catalog + pure calculation helpers.
-// Keep business logic here so app.js stays clean.
+// Business logic stays here so app.js stays clean.
 
 const EstimateTool = (() => {
-  // ---- 1) YOUR COST BASIS (edit this) ------------------------------------
+  // ---- 1) YOUR COST BASIS (from your sheet; orange column = what you pay vendor) ----
   // pricePerSqFt = your COST per sq ft (expense)
-  // setupFee = flat cost per line item (optional)
-  // notes can explain constraints to reps
+  // installPricePerSqFt = optional reference rate from your sheet (NOT used automatically yet)
+  // sku = your part number
   const CATALOG = {
     categories: [
       {
-        id: "banners",
-        name: "Banners",
+        id: "pvc_vinyl",
+        name: "PVC Vinyl",
         items: [
-          { id: "banner_13oz", name: "13oz Banner", unit: "sqft", pricePerSqFt: 2.15, setupFee: 5, notes: "Standard banner stock" },
-          { id: "banner_mesh_7030", name: "70/30 Mesh Banner", unit: "sqft", pricePerSqFt: 2.65, setupFee: 6, notes: "Wind-permeable mesh" },
-          { id: "banner_double_sided", name: "Double-Sided Banner", unit: "sqft", pricePerSqFt: 4.35, setupFee: 10, notes: "Blockout + double print" },
+          { id: "mesh_7030", sku: "MESH7030126", name: "70/30 Mesh", unit: "sqft", pricePerSqFt: 4.25, installPricePerSqFt: 3.0, setupFee: 0, notes: "" },
+          { id: "banner_13oz", sku: "MBV13126", name: "13 oz Banner", unit: "sqft", pricePerSqFt: 4.25, installPricePerSqFt: 3.0, setupFee: 0, notes: "" },
+          { id: "banner_18oz_double_sided", sku: "BO18OZ126", name: "18oz Double Sided Banner", unit: "sqft", pricePerSqFt: 7.23, installPricePerSqFt: 5.0, setupFee: 0, notes: "" },
         ],
       },
       {
-        id: "vinyl",
-        name: "Vinyl (Window/Wall)",
+        id: "adhesive_backed_vinyl",
+        name: "Adhesive Backed Vinyl",
         items: [
-          { id: "vinyl_calendered", name: "Calendered Vinyl", unit: "sqft", pricePerSqFt: 1.85, setupFee: 8, notes: "Shorter-term" },
-          { id: "vinyl_cast", name: "Cast Vinyl", unit: "sqft", pricePerSqFt: 2.95, setupFee: 10, notes: "Premium / longer-term" },
-          { id: "laminate_addon", name: "Laminate Add-On", unit: "sqft", pricePerSqFt: 0.90, setupFee: 0, notes: "Add laminate cost if used" },
+          { id: "standard_decal_matte_lam", sku: "C4ABV60", name: "Standard Decal with Matte Lam", unit: "sqft", pricePerSqFt: 5.10, installPricePerSqFt: 3.0, setupFee: 0, notes: "" },
+          { id: "gf_matte_lam", sku: "GFABV54", name: "General Formulations With Matte Lam", unit: "sqft", pricePerSqFt: 5.95, installPricePerSqFt: 3.0, setupFee: 0, notes: "" },
+          { id: "window_perf", sku: "WP703054", name: "Window Perf", unit: "sqft", pricePerSqFt: 6.80, installPricePerSqFt: 3.5, setupFee: 0, notes: "" },
+          { id: "3m_ij180_8520_lam", sku: "IJ180C", name: "3M-IJ180 with 8520 Lam", unit: "sqft", pricePerSqFt: 7.23, installPricePerSqFt: 3.5, setupFee: 0, notes: "" },
+          { id: "multigrip", sku: "MG48", name: "Multigrip", unit: "sqft", pricePerSqFt: 7.65, installPricePerSqFt: 4.0, setupFee: 0, notes: "" },
+          { id: "brick_adhesive_with_lam", sku: "SG852454", name: "Brick Adhesive Vinyl with Lam", unit: "sqft", pricePerSqFt: 9.35, installPricePerSqFt: 6.0, setupFee: 0, notes: "" },
+          { id: "dusted_crystal", sku: "DC772531448", name: "Dusted Crystal", unit: "sqft", pricePerSqFt: 10.20, installPricePerSqFt: 6.0, setupFee: 0, notes: "" },
+          { id: "optically_clear_glass", sku: "GAOPT154", name: "Optically Clear Glass Material", unit: "sqft", pricePerSqFt: 11.90, installPricePerSqFt: 6.0, setupFee: 0, notes: "" },
         ],
       },
       {
-        id: "flags",
-        name: "Flags",
+        id: "rigid_board",
+        name: "Rigid Board",
         items: [
-          { id: "flag_single_sided", name: "Flag (Single-Sided)", unit: "sqft", pricePerSqFt: 3.25, setupFee: 8, notes: "Includes hemming baseline" },
-          { id: "flag_double_sided", name: "Flag (Double-Sided)", unit: "sqft", pricePerSqFt: 5.95, setupFee: 12, notes: "Heavier labor/material" },
+          { id: "coroplast", sku: "CORO4896", name: "Coroplast", unit: "sqft", pricePerSqFt: 5.10, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "styrene_060", sku: "STY0604896", name: ".060 Styrene", unit: "sqft", pricePerSqFt: 5.95, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "pvc_2mm_poster_program", sku: "PVC2MMW", name: '2MM PVC (Poster Program / 22" x 28")', unit: "sqft", pricePerSqFt: 5.95, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "foamcore_3_16", sku: "FC316W4896", name: "3/16 Foamcore", unit: "sqft", pricePerSqFt: 7.65, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "pvc_3mm_white", sku: "3MMWPVC4896", name: "3MM PVC White", unit: "sqft", pricePerSqFt: 8.50, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "pvc_3mm_black", sku: "3MMBPVC4896", name: "3MM PVC Black", unit: "sqft", pricePerSqFt: 9.35, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "gatorboard_3_16_white", sku: "GB316W4896", name: "3/16 Gatorboard White", unit: "sqft", pricePerSqFt: 10.20, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "gatorboard_3_16_black", sku: "GB316B4896", name: "3/16 Gatorboard Black", unit: "sqft", pricePerSqFt: 11.26, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "pvc_6mm_white", sku: "6MMWPVC4896", name: "6MM PVC White", unit: "sqft", pricePerSqFt: 11.90, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "gatorboard_half_black", sku: "GB12W4896", name: "1/2 Gatorboard Black", unit: "sqft", pricePerSqFt: 11.90, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "diabond", sku: "DB3MMW4896", name: "Diabond", unit: "sqft", pricePerSqFt: 12.75, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "pvc_6mm_black", sku: "6MMBPVC4896", name: "6MM PVC Black", unit: "sqft", pricePerSqFt: 13.18, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "gatorboard_half_white", sku: "GB12B4896", name: "1/2 Gatorboard White", unit: "sqft", pricePerSqFt: 13.60, installPricePerSqFt: null, setupFee: 0, notes: "" },
         ],
       },
       {
-        id: "misc",
-        name: "Misc",
+        id: "backlit_film",
+        name: "Backlit Film",
         items: [
-          { id: "coroplast", name: "Coroplast Signs", unit: "sqft", pricePerSqFt: 2.40, setupFee: 6, notes: "Does not include stakes/hardware" },
-          { id: "aluminum", name: "Aluminum Composite Panel", unit: "sqft", pricePerSqFt: 6.75, setupFee: 15, notes: "ACP / Dibond style" },
+          { id: "optilux_backlight_film", sku: "OPTIFLM54", name: "Optilux Backlight Film", unit: "sqft", pricePerSqFt: 6.80, installPricePerSqFt: 3.0, setupFee: 0, notes: "" },
+        ],
+      },
+      {
+        id: "dye_sublimated_fabric",
+        name: "Dye Sublimated Fabric",
+        items: [
+          { id: "flag_fabric_ss", sku: "DSFLAGSS126", name: "Flag Fabric (SS Printing)", unit: "sqft", pricePerSqFt: 7.65, installPricePerSqFt: null, setupFee: 0, notes: "" },
+          { id: "stretch_4_way", sku: "DS4WAY126", name: "4 Way Stretch", unit: "sqft", pricePerSqFt: 8.50, installPricePerSqFt: 4.0, setupFee: 0, notes: "" },
+          { id: "black_back_fabric", sku: "DSBB126", name: "Black Back Fabric", unit: "sqft", pricePerSqFt: 8.50, installPricePerSqFt: 4.0, setupFee: 0, notes: "" },
+          { id: "flag_fabric_ds", sku: "DSFLAGDS126", name: "Flag Fabric (DS Printing)", unit: "sqft", pricePerSqFt: 11.90, installPricePerSqFt: null, setupFee: 0, notes: "" },
         ],
       },
     ],
