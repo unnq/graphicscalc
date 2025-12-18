@@ -407,8 +407,8 @@ function SectionPrintLines({ printLines, onRemove, onUpdate }) {
             <th style={{ width: 140 }}>Sell $ / sqft</th>
             <th style={{ width: 120 }}>Markup %</th>
             <th style={{ width: 120 }}>Sq Ft</th>
-            <th style={{ width: 140 }}>Your Cost</th>
-            <th style={{ width: 140 }}>Customer</th>
+            <th style={{ width: 140 }}>Expense</th>
+            <th style={{ width: 140 }}>Revenue</th>
             <th style={{ width: 80 }}></th>
           </tr>
         </thead>
@@ -588,8 +588,8 @@ function SectionHourly({
               <th style={{ width: 140 }}>Pay / hr</th>
               <th style={{ width: 140 }}>Bill / hr</th>
               <th style={{ width: 120 }}>Hours</th>
-              <th style={{ width: 150 }}>Your Cost</th>
-              <th style={{ width: 150 }}>Customer</th>
+              <th style={{ width: 150 }}>Expense</th>
+              <th style={{ width: 150 }}>Revenue</th>
               <th style={{ width: 90 }}></th>
             </tr>
           </thead>
