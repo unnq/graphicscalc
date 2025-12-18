@@ -1,5 +1,5 @@
 :root{
-  --bg:#070A12;
+  --bg:#0c0c0c;
   --panel:#0C1020;
   --panel2:#0A0E1B;
   --stroke:rgba(255,255,255,0.10);
@@ -26,11 +26,7 @@ body{
   margin:0;
   font-family: var(--sans);
   color: var(--text);
-  background:
-    radial-gradient(1200px 800px at 15% -20%, rgba(122,167,255,0.22), transparent 60%),
-    radial-gradient(900px 700px at 90% 0%, rgba(92,242,176,0.12), transparent 60%),
-    radial-gradient(900px 700px at 50% 110%, rgba(255,209,102,0.10), transparent 60%),
-    var(--bg);
+  background: var(--bg);
 }
 
 a{ color:inherit; }
