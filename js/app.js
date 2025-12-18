@@ -407,7 +407,6 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   <td>
                     <input
                       className="input"
-                      type="number"
                       value={ln.width}
                       onChange={(e) => onUpdate(ln.id, { width: e.target.value })}
                     />
@@ -416,7 +415,6 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   <td>
                     <input
                       className="input"
-                      type="number"
                       value={ln.height}
                       onChange={(e) => onUpdate(ln.id, { height: e.target.value })}
                     />
@@ -436,7 +434,6 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   <td>
                     <input
                       className="input"
-                      type="number"
                       value={ln.qty}
                       onChange={(e) => onUpdate(ln.id, { qty: e.target.value })}
                     />
@@ -471,8 +468,6 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   <td>
                     <input
                       className="input"
-                      type="number"
-                      step="0.1"
                       value={ln.markupPct}
                       onChange={(e) => onUpdate(ln.id, { markupPct: e.target.value })}
                     />
@@ -537,7 +532,6 @@ function SectionLabor({
           <div className="label">Install Sq Ft (for $/sqft breakdown)</div>
           <input
             className="input"
-            type="number"
             value={installSqFt}
             onChange={(e) => setInstallSqFt(e.target.value)}
             placeholder="e.g., 500"
@@ -585,8 +579,6 @@ function SectionLabor({
                   <td>
                     <input
                       className="input"
-                      type="number"
-                      step="0.5"
                       value={ln.payPerHr}
                       onChange={(e) => onUpdate(ln.id, { payPerHr: e.target.value })}
                     />
@@ -594,8 +586,6 @@ function SectionLabor({
                   <td>
                     <input
                       className="input"
-                      type="number"
-                      step="0.5"
                       value={ln.billPerHr}
                       onChange={(e) => onUpdate(ln.id, { billPerHr: e.target.value })}
                     />
@@ -603,8 +593,6 @@ function SectionLabor({
                   <td>
                     <input
                       className="input"
-                      type="number"
-                      step="0.25"
                       value={ln.hours}
                       onChange={(e) => onUpdate(ln.id, { hours: e.target.value })}
                     />
