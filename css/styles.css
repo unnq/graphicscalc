@@ -39,7 +39,7 @@ a{ color:inherit; }
   align-items:center;
   justify-content:space-between;
   padding: 16px 20px;
-  background: rgba(7,10,18,0.82);
+  background: var(--bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--stroke);
 }
