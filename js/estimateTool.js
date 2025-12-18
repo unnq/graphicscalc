@@ -127,39 +127,60 @@ const EstimateTool = (() => {
   // ---- 3) PRINT LINE CALCS ------------------------------------------------
   // line shape:
   // { itemId, desc, width, height, unit, qty, sides, markupPct, overrideCostPerSqFt? }
-  function calcPrintLine(line) {
-    const item = getItemById(line.itemId);
-    const qty = clamp(toNumber(line.qty, 1), 0, 999999);
-    const sides = clamp(toNumber(line.sides, 1), 1, 2);
-    const markupPct = toNumber(line.markupPct, 0);
+  // line shape:
+// {
+//   itemId, desc,
+//   width, height, unit,
+//   qty, sides,
+//   sellPricePerSqFt,          // NEW: customer price per sqft (editable)
+//   overrideCostPerSqFt?       // optional override of vendor cost per sqft
+// }
+function calcPrintLine(line) {
+  const item = getItemById(line.itemId);
 
-    const sqftEach = calcSqFt(line.width, line.height, line.unit);
-    const sqftTotal = sqftEach * qty * sides;
+  const qty = clamp(toNumber(line.qty, 1), 0, 999999);
+  const sides = clamp(toNumber(line.sides, 1), 1, 2);
 
-    const baseCostPerSqFt =
-      line.overrideCostPerSqFt !== undefined && line.overrideCostPerSqFt !== "" && line.overrideCostPerSqFt !== null
-        ? toNumber(line.overrideCostPerSqFt, 0)
-        : (item?.pricePerSqFt ?? 0);
+  const sqftEach = calcSqFt(line.width, line.height, line.unit);
+  const sqftTotal = sqftEach * qty * sides;
 
-    const setupFee = item?.setupFee ?? 0;
+  const baseCostPerSqFt =
+    line.overrideCostPerSqFt !== undefined && line.overrideCostPerSqFt !== "" && line.overrideCostPerSqFt !== null
+      ? toNumber(line.overrideCostPerSqFt, 0)
+      : (item?.pricePerSqFt ?? 0);
 
-    const cost = (sqftTotal * baseCostPerSqFt) + setupFee;
-    const price = cost * (1 + markupPct / 100);
-    const profit = price - cost;
-    const marginPct = price > 0 ? (profit / price) * 100 : 0;
+  // Sell rate: if empty, default to cost (no margin)
+  const sellPricePerSqFt =
+    line.sellPricePerSqFt !== undefined && line.sellPricePerSqFt !== "" && line.sellPricePerSqFt !== null
+      ? toNumber(line.sellPricePerSqFt, 0)
+      : baseCostPerSqFt;
 
-    return {
-      item,
-      sqftEach,
-      sqftTotal,
-      baseCostPerSqFt,
-      setupFee,
-      cost: round2(cost),
-      price: round2(price),
-      profit: round2(profit),
-      marginPct: round2(marginPct),
-    };
-  }
+  const setupFee = item?.setupFee ?? 0;
+
+  const cost = (sqftTotal * baseCostPerSqFt) + setupFee;
+  const price = (sqftTotal * sellPricePerSqFt) + setupFee;
+
+  const profit = price - cost;
+
+  // Markup is relative to COST; margin is relative to PRICE
+  const markupPct = cost > 0 ? (profit / cost) * 100 : 0;
+  const marginPct = price > 0 ? (profit / price) * 100 : 0;
+
+  return {
+    item,
+    sqftEach,
+    sqftTotal,
+    baseCostPerSqFt,
+    sellPricePerSqFt,
+    setupFee,
+    cost: round2(cost),
+    price: round2(price),
+    profit: round2(profit),
+    markupPct: round2(markupPct),
+    marginPct: round2(marginPct),
+  };
+}
+
 
   function calcPrintTotals(lines) {
     let sqftTotal = 0;
