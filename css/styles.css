@@ -171,19 +171,23 @@ a{ color:inherit; }
 
 /* Numeric fields: still compact but usable */
 .table-wrap input[type="number"]{
-  min-width: 110px;
+  min-width: 3.5rem;
   text-align: right;
   font-family: var(--mono);
 }
 
 /* Item dropdown should be wider */
 .table-wrap select.select{
-  min-width: 220px;
+  min-width: 3rem;
 }
 
 /* Notes/description field should be wider */
 .table-wrap td:nth-child(2) .input{
-  min-width: 260px;
+  min-width: 4rem;
+}
+
+.table-wrap td:nth-child(1) .select{
+  min-width: 9rem;
 }
 
 /* Don’t crush columns; allow scroll instead */
