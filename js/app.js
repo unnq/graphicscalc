@@ -737,9 +737,9 @@ function KPIPanel({ printTotals, laborTotals, designTotals, grandTotals, install
       <div className="kpi-body">
         <div className="kpi-grid">
           <div className="kpi-box">
-            <div className="kpi-label">Print — Customer</div>
+            <div className="kpi-label">Print — Revenue</div>
             <div className="kpi-value">{EstimateTool.money(printTotals.price)}</div>
-            <div className="small">Cost: {EstimateTool.money(printTotals.cost)} • Profit: {EstimateTool.money(printTotals.profit)}</div>
+            <div className="small">Expense: {EstimateTool.money(printTotals.cost)} • Profit: {EstimateTool.money(printTotals.profit)}</div>
           </div>
 
           <div className="kpi-box">
@@ -749,9 +749,9 @@ function KPIPanel({ printTotals, laborTotals, designTotals, grandTotals, install
           </div>
 
           <div className="kpi-box">
-            <div className="kpi-label">Labor — Customer</div>
+            <div className="kpi-label">Labor — Revenue</div>
             <div className="kpi-value">{EstimateTool.money(laborTotals.price)}</div>
-            <div className="small">Cost: {EstimateTool.money(laborTotals.cost)} • Profit: {EstimateTool.money(laborTotals.profit)}</div>
+            <div className="small">Expense: {EstimateTool.money(laborTotals.cost)} • Profit: {EstimateTool.money(laborTotals.profit)}</div>
           </div>
 
           <div className="kpi-box">
@@ -761,7 +761,7 @@ function KPIPanel({ printTotals, laborTotals, designTotals, grandTotals, install
           </div>
 
           <div className="kpi-box">
-            <div className="kpi-label">Design — Customer</div>
+            <div className="kpi-label">Design — Revenue</div>
             <div className="kpi-value">{EstimateTool.money(designTotals.price)}</div>
             <div className="small">Cost: {EstimateTool.money(designTotals.cost)} • Profit: {EstimateTool.money(designTotals.profit)}</div>
           </div>
@@ -773,10 +773,10 @@ function KPIPanel({ printTotals, laborTotals, designTotals, grandTotals, install
           </div>
 
           <div className="kpi-box" style={{ gridColumn: "1 / -1" }}>
-            <div className="kpi-label">Grand Total — Customer</div>
+            <div className="kpi-label">Grand Total — Revenue</div>
             <div className={`kpi-value ${profitClass}`}>{EstimateTool.money(grandTotals.price)}</div>
             <div className="small">
-              Total Cost: {EstimateTool.money(grandTotals.cost)} • Profit:{" "}
+              Total Expense: {EstimateTool.money(grandTotals.cost)} • Profit:{" "}
               <span className={profitClass}>{EstimateTool.money(grandTotals.profit)}</span> • Margin:{" "}
               <span className={marginClass}>{EstimateTool.pct(grandTotals.marginPct)}</span>
             </div>
