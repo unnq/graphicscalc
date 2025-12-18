@@ -152,7 +152,7 @@ a{ color:inherit; }
    =========================== */
 .input, .select, .textarea{
   width:100%;
-  min-width: 140px;              /* key fix */
+  min-width: 4rem;              /* key fix */
   padding: 10px 10px;
   border-radius: 12px;
   border: 1px solid var(--stroke);
