@@ -163,11 +163,7 @@ a{ color:inherit; }
 .textarea{ min-height: 84px; resize: vertical; }
 
 /* Table-specific sizing so columns stay readable */
-.table-wrap input,
-.table-wrap select,
-.table-wrap textarea{
-  min-width: 150px;              /* key fix inside tables */
-}
+
 
 /* Numeric fields: still compact but usable */
 .table-wrap input[type="number"]{
@@ -178,7 +174,7 @@ a{ color:inherit; }
 
 /* Item dropdown should be wider */
 .table-wrap select.select{
-  min-width: 3rem;
+  min-width: 3.5rem;
 }
 
 /* Notes/description field should be wider */
