@@ -8,19 +8,25 @@ function uid(prefix = "id") {
 const STORAGE_KEY = "cgg_estimator_v1";
 
 function defaultPrintLine() {
+  const item = EstimateTool.getItemById("banner_13oz");
+  const base = item?.pricePerSqFt ?? 0;
+  const defaultMarkup = 40; // used only to set a starting sell rate
+  const defaultSell = EstimateTool.round2(base * (1 + defaultMarkup / 100));
+
   return {
     id: uid("pl"),
     itemId: "banner_13oz",
     desc: "",
     width: 48,
     height: 24,
-    unit: "in",     // "in" | "ft"
+    unit: "in",
     qty: 1,
-    sides: 1,       // 1 or 2
-    markupPct: 40,  // default markup
-    overrideCostPerSqFt: "", // optional override
+    sides: 1,
+    sellPricePerSqFt: defaultSell,     // NEW primary input
+    overrideCostPerSqFt: "",           // optional override
   };
 }
+
 
 function defaultLaborLine() {
   return {
