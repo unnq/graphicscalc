@@ -60,7 +60,7 @@ a{ color:inherit; }
   padding: 8px 10px;
   border: 1px solid var(--stroke);
   background: rgba(255,255,255,0.04);
-  border-radius: 999px;
+  border-radius: var(--radius);
 }
 
 .shell{
@@ -110,7 +110,7 @@ a{ color:inherit; }
 }
 .tab{
   flex: 0 0 auto;
-  border-radius: 999px;
+  border-radius: var(--radius);
   padding: 10px 12px;
   border: 1px solid var(--stroke);
   background: rgba(255,255,255,0.04);
@@ -303,7 +303,7 @@ td .mono{
   font-family: var(--mono);
   font-size: 12px;
   padding: 6px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   border: 1px solid var(--stroke);
   background: rgba(255,255,255,0.04);
   color: var(--muted);
