@@ -63,7 +63,6 @@ function CollapsibleSection({ title, subtitle, collapsed, setCollapsed, right, c
           justifyContent: "space-between",
           gap: 10,
           padding: "12px 12px",
-          borderBottom: "1px solid rgba(255,255,255,0.10)",
           background: "rgba(255,255,255,0.02)",
           cursor: "pointer",
           userSelect: "none",
