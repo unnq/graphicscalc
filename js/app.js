@@ -279,7 +279,28 @@ function App() {
     }
 
     const filename = `Quote${qNum ? `-${qNum}` : ""}-${today.toISOString().slice(0, 10)}.pdf`;
-    doc.save(filename);
+
+      // Open PDF in a new tab (print preview) instead of downloading
+      const pdfBlob = doc.output("blob");
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      
+      const win = window.open(pdfUrl, "_blank", "noopener,noreferrer");
+      if (!win) {
+        alert("Popup blocked. Please allow popups to preview/print the quote.");
+        return;
+      }
+      
+      // Optional: set tab title (some browsers ignore this for PDFs)
+      try { win.document.title = filename; } catch {}
+      
+      // Optional: auto-open print dialog after it loads (works in many browsers, not all)
+      setTimeout(() => {
+        try { win.focus(); win.print(); } catch {}
+      }, 800);
+      
+      // Cleanup blob URL later
+      setTimeout(() => URL.revokeObjectURL(pdfUrl), 60_000);
+
   }
 
   return (
