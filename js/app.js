@@ -364,7 +364,8 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
               <th style={{ width: 90 }}>Qty</th>
               <th style={{ width: 90 }}>Sides</th>
               <th style={{ width: 130 }}>Cost / sqft</th>
-              <th style={{ width: 110 }}>Markup %</th>
+              <th style={{ width: 110 }}>Sell $ / sqft</th>
+              <th style={{ width: 120 }}>Markup %</th>
               <th style={{ width: 120 }}>Sq Ft</th>
               <th style={{ width: 140 }}>Your Cost</th>
               <th style={{ width: 140 }}>Customer</th>
@@ -380,12 +381,22 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                     <select
                       className="select"
                       value={ln.itemId}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const nextId = e.target.value;
+                        const nextItem = EstimateTool.getItemById(nextId);
+                        const base = nextItem?.pricePerSqFt ?? 0;
+                      
+                        // keep your same default markup for starting point (edit if you want)
+                        const defaultMarkup = 40;
+                        const nextSell = EstimateTool.round2(base * (1 + defaultMarkup / 100));
+                      
                         onUpdate(ln.id, {
-                          itemId: e.target.value,
-                          overrideCostPerSqFt: "", // clear override so base reflects the selected item
-                        })
-                      }
+                          itemId: nextId,
+                          overrideCostPerSqFt: "",
+                          sellPricePerSqFt: nextSell,
+                        });
+                      }}
+
                     >
                       {EstimateTool.CATALOG.categories.map((cat) => (
                         <optgroup key={cat.id} label={cat.name}>
@@ -471,9 +482,17 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   <td>
                     <input
                       className="input"
-                      value={ln.markupPct}
-                      onChange={(e) => onUpdate(ln.id, { markupPct: e.target.value })}
+                      type="number"
+                      step="0.01"
+                      value={ln.sellPricePerSqFt ?? ""}
+                      onChange={(e) => onUpdate(ln.id, { sellPricePerSqFt: e.target.value })}
                     />
+                    <div className="mini">Customer rate</div>
+                  </td>
+
+                  <td>
+                    <div className="mono">{EstimateTool.pct(c.markupPct)}</div>
+                    <div className="mini">Margin: {EstimateTool.pct(c.marginPct)}</div>
                   </td>
 
                   <td>
