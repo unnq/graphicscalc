@@ -272,8 +272,6 @@ td .mono{
 .kpi-value.bad{ color: var(--bad); }
 
 .hr{
-  height: 1px;
-  background: rgba(255,255,255,0.10);
   margin: 14px 0;
 }
 
