@@ -226,11 +226,11 @@ table{
   min-width: 1100px;            /* slightly larger so inputs don’t get squeezed */
 }
 th, td{
-  padding: 10px 10px;
+  padding: .25rem .5rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   vertical-align: middle;
   font-size: 13px;
-  white-space: nowrap;          /* prevents the browser from shrinking cells unpredictably */
+         /* prevents the browser from shrinking cells unpredictably */
 }
 th{
   text-align:left;
