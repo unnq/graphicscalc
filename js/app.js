@@ -498,7 +498,6 @@ function SectionPrintLines({ printLines, onRemove, onUpdate }) {
                     onChange={(e) => onUpdate(ln.id, { overrideCostPerSqFt: e.target.value })}
                     placeholder={String(c.item?.pricePerSqFt ?? 0)}
                   />
-                  <div className="mini">Base: {EstimateTool.money(c.item?.pricePerSqFt ?? 0)}/sqft</div>
                 </td>
 
                 <td>
