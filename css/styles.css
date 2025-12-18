@@ -99,8 +99,8 @@ a{ color:inherit; }
 .card-body{ padding: 16px; }
 
 .grid-2{
-  display:grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 @media (max-width: 980px){
@@ -146,8 +146,13 @@ a{ color:inherit; }
   font-size:12px;
   color: var(--muted);
 }
+
+/* ===========================
+   FIX: inputs collapsing too small
+   =========================== */
 .input, .select, .textarea{
   width:100%;
+  min-width: 140px;              /* key fix */
   padding: 10px 10px;
   border-radius: 12px;
   border: 1px solid var(--stroke);
@@ -156,6 +161,38 @@ a{ color:inherit; }
   outline: none;
 }
 .textarea{ min-height: 84px; resize: vertical; }
+
+/* Table-specific sizing so columns stay readable */
+.table-wrap input,
+.table-wrap select,
+.table-wrap textarea{
+  min-width: 150px;              /* key fix inside tables */
+}
+
+/* Numeric fields: still compact but usable */
+.table-wrap input[type="number"]{
+  min-width: 110px;
+  text-align: right;
+  font-family: var(--mono);
+}
+
+/* Item dropdown should be wider */
+.table-wrap select.select{
+  min-width: 220px;
+}
+
+/* Notes/description field should be wider */
+.table-wrap td:nth-child(2) .input{
+  min-width: 260px;
+}
+
+/* Don’t crush columns; allow scroll instead */
+.table-wrap{
+  overflow:auto;
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.18);
+}
 
 .btn-row{
   display:flex;
@@ -183,22 +220,17 @@ a{ color:inherit; }
 }
 .btn:active{ transform: translateY(1px); }
 
-.table-wrap{
-  overflow:auto;
-  border: 1px solid var(--stroke);
-  border-radius: 14px;
-  background: rgba(0,0,0,0.18);
-}
 table{
   width: 100%;
   border-collapse: collapse;
-  min-width: 980px;
+  min-width: 1100px;            /* slightly larger so inputs don’t get squeezed */
 }
 th, td{
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   vertical-align: middle;
   font-size: 13px;
+  white-space: nowrap;          /* prevents the browser from shrinking cells unpredictably */
 }
 th{
   text-align:left;
