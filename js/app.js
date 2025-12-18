@@ -479,8 +479,8 @@ function SectionPrintLines({ printLines, onAdd, onRemove, onUpdate }) {
                   </td>
 
                   <td>
-                    <div className="mono">{EstimateTool.round2(c.sqftTotal)} sqft</div>
-                    <div className="mini">{EstimateTool.round2(c.sqftEach)} sqft each</div>
+                    <div className="mono">{EstimateTool.round2(c.sqftTotal)}</div>
+                    <div className="mini">{EstimateTool.round2(c.sqftEach)} per</div>
                   </td>
 
                   <td>
