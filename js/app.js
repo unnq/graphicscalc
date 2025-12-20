@@ -230,7 +230,7 @@ function App() {
       const dim = `${EstimateTool.round2(EstimateTool.toNumber(ln.width))} x ${EstimateTool.round2(
         EstimateTool.toNumber(ln.height)
       )} ${ln.unit}`;
-      const qty = `${ln.qty} (x${ln.sides} side)`;
+      const qty = `${ln.qty}`;
       return [
         itemName,
         ln.desc || "",
